@@ -1,0 +1,85 @@
+\title{Photon Physics\\Week 1}
+\author{Hayley Deckers}
+\date{\today}
+
+\documentclass[12pt,a4paper,twosided]{article}
+\usepackage{amsmath}
+\usepackage{physics}
+\usepackage{amssymb}
+\usepackage{hyperref}
+\usepackage[backend=bibtex,style=numeric]{biblatex}
+\bibliography{main}
+
+\begin{document}
+\maketitle
+
+\section{Show that $\nabla \cross \nabla \cross = \nabla(\nabla\cdot)-\nabla^2$.}
+using Einstein summation notaion
+\begin{align}
+  \left(\nabla \cross \vec u\right)^k &= \epsilon^{ijk} \partial_i u_j,
+\end{align}
+and
+\begin{align}
+  \left(\nabla \cross \left(\nabla \cross \vec u\right)\right)^l &= \epsilon^{mkl} \partial_m \epsilon_{ijk} \partial^i u^j,\\
+  &= \epsilon^{mkl}\epsilon_{ijk}  \partial_m \partial^i u^j\\
+  &= \epsilon_{kij}\epsilon^{klm}  \partial_m \partial^i u^j\\
+  &= \left( \delta_i^l \delta_j^m - \delta_i^m \delta_j^l \right)  \partial_m \partial^i u^j
+\end{align}
+Here we used that we can rotate levi-cita indices and the properties of the levi-cita symbol\footnote{\url{https://en.wikipedia.org/wiki/Levi-Civita_symbol\#Three_dimensions_2}}
+If we sum over the repeated indices, and fill in all the kronecker deltas, the second term becomes:
+\begin{align}
+  - \delta_i^m \delta_j^l \partial_m \partial^i u^j = - \delta_i^i \delta_l^l \partial_i\partial^i u^l = -\left(\nabla^2 \vec u\right)^l
+\end{align}
+The first term becomes
+\begin{align}
+  \delta_i^l \delta_j^m \partial_m \partial^i u^j = \delta_l^l \delta_j^j \partial_j \partial^l u^j = \partial^l \partial_j u^j = \nabla\left(\nabla\cdot \vec u\right)^l
+\end{align}
+proving the identity.
+\section{Use this to derive the Helmholtz equation}
+  We start by taking the curl-of-the-curl of the $\vec E$ field and multiplying by $-1$ to get
+  \begin{align}
+    - \nabla \cross \nabla \cross \vec E = \nabla^2 E - \nabla\left(\nabla \cdot \vec E\right)
+  \end{align}
+  the last term on the r.h.s. is zero because the divergence of $\vec D$ is zero. Taking this into account, moving the l.h.s. to the r.h.s. and using the given formulas for the cross products we find:
+  \begin{align}
+    0 &= \nabla^2 E + \nabla \cross \nabla \cross \vec E\\
+    &= \nabla^2 E + \nabla \cross \left(-\frac{\partial}{\partial t}\vec B\right)\\
+    &= \nabla^2 E + -\frac{\partial}{\partial t}\left(\nabla \cross \vec B\right)\\
+    &= \nabla^2 E + -\frac{\partial}{\partial t}\left(\mu_0\frac{\partial}{\partial t}\vec D\right)\\
+    &= \nabla^2 E -\mu_0 \frac{\partial^2}{\partial t^2}\varepsilon \varepsilon_0 \vec E\\
+    &= \nabla^2 E -\frac{\varepsilon}{c^2} \frac{\partial^2}{\partial t^2}\vec E
+  \end{align}
+
+\section{Fill in a plane-wave solution and derive the dispersion relation.}
+If we use the test function
+\begin{align}
+ \vec E = \vec E_0 e^{i\vec k\cdot \vec r-i \omega t}
+\end{align}
+then
+\begin{align}
+  \nabla^2 \vec E  -\frac{\varepsilon}{c^2} \frac{\partial^2}{\partial t^2}\vec E = \omega^2 \frac{\varepsilon}{c^2} \vec E - \vec k^2 \vec E =0
+\end{align}
+This then means:
+\begin{align}
+  \omega^2 \frac{\varepsilon}{c^2} \vec E = \vec k^2 \vec E\\
+  \omega^2 = \frac{c^2 \vec k^2}{\varepsilon}\\
+  \sqrt{k^2} = \frac{\omega \sqrt{\varepsilon}}{c}\\
+  \to k(\omega) = \left(\pm\right)\frac{\omega \sqrt{\varepsilon}}{c}
+\end{align}
+\section{Use your answer from question c to show that $n = \sqrt{\varepsilon}$.}
+We can write $n = \lambda_0/\lambda$, and $k = 2 \pi / \lambda$. So $\lambda$ goes as
+\begin{align}
+  \lambda = \frac{2 \pi c}{\omega \sqrt{\varepsilon}}
+\end{align}
+We consider omega fixed, and $c$ is the {\em vacuum} speed of light regardless of medium thus we can consider these constants. Furthermore $\varepsilon$ is the {\em relative} permitivity and is therefore by definition $=1$ in vacuum. Thus\footnote{Note that $\varepsilon_0$ implies the relative permitivity in vacuum here, not the absolute vacuum permitivity.}
+\begin{align}
+\frac{\lambda_0}{\lambda} &= \frac{2 \pi c}{\omega \sqrt{\varepsilon_0}} / \frac{2 \pi c}{\omega \sqrt{\varepsilon}}\\
+&= \sqrt{\frac{\varepsilon}{\varepsilon_0}} = \sqrt{\varepsilon} = n
+\end{align}
+\section{Show that the electromagnetic plane wave in our problem must be transverse, with $\vec k$, $\vec E$, and $\vec B$ perpendicular
+to each other.}
+The Maxwell curl equations (3, 4) show that $\vec E$ and $\vec B$ are perpendicular to each other.
+Putting in the plane-wave solution into the equation $\nabla \cdot \vec D = 0$, noting the $\vec D = \varepsilon \varepsilon_0 \vec E$, yield $\vec k \cdot \vec E = 0$, thus $k$ and $E$ are perpendicular.
+\par If we start with taking the curl-of-the-curl of $\vec B$ in our derivation of the Helmholtz equation, we get an expression similar to the Helmholtz equation only now with $\vec B$ instead of $\vec E$. Combinging this expression with the Maxwell formula for the divergence of the magnetic field yields $\vec B$ perpendicular to $\vec k$ proving that  $\vec k$, $\vec E$, and $\vec B$ are perpendicular to each other.
+\par As the group velocity is always in the direction of $\vec k$ (and in this case it matches the direction of wave propagation), that means this {\em must} be a transverse wave with $\vec E$ and $\vec B$ perpendicular to the direction of movement.
+\end{document}
